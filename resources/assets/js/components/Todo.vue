@@ -52,7 +52,7 @@
                 let text = this.todoItemText.trim()
                 if (text !== '') {
                     this.axios.post('/api/todos', {'text': text}).then((response) => {
-                        this.items.unshift(response.data)
+                        this.items.push(response.data)
                     });
                     this.todoItemText = ''
                 }

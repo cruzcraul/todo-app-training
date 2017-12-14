@@ -30088,7 +30088,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var text = this.todoItemText.trim();
             if (text !== '') {
                 this.axios.post('/api/todos', { 'text': text }).then(function (response) {
-                    _this2.items.unshift(response.data);
+                    _this2.items.push(response.data);
                 });
                 this.todoItemText = '';
             }
@@ -30113,7 +30113,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     dialog.close();
                 }, 2500);
             }).catch(function (error) {
-                this.errors = error.response.data;
                 console.log(error.response);
             });
         },
