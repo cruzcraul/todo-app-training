@@ -47,4 +47,15 @@ class Todo extends Model
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * Toggle done status 
+     *
+     * @return void
+     */
+    public function toggleDone()
+    {
+        $this->done = !$this->done;
+        $this->save();
+    }
 }
