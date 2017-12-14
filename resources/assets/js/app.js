@@ -9,6 +9,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+import VuejsDialog from "vuejs-dialog"
+
+Vue.use(VueAxios, axios);
+Vue.use(VuejsDialog)
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -38,30 +38,51 @@
             return {
                 todoItemText: '',
                 items: [],
+                errors: {},
+                messageSuccess: ''
             }
         },
         mounted () {
-            this.items = [
-                { text: 'Primer recordatorio', done: true },
-                { text: 'Segundo recordatorio', done: false },
-                { text: 'Tercero recordatorio', done: false },
-                { text: 'Cuarto recordatorio', done: true },
-                { text: 'Quinto recordatorio', done: false },
-            ]
+            this.axios.get('/api/todos').then((response) => {
+                this.items = response.data;
+            });
         },
         methods: {
             addTodo () {
                 let text = this.todoItemText.trim()
                 if (text !== '') {
-                    this.items.push({ text: text, done: false })
+                    this.axios.post('/api/todos', {'text': text}).then((response) => {
+                        this.items.unshift(response.data)
+                    });
                     this.todoItemText = ''
                 }
             },
             removeTodo (todo) {
-                this.items = this.items.filter(item => item !== todo)
+                this.$dialog.confirm("¿Estás seguro que deseas eliminar este recordatorio?", {
+                    loader: true,
+                    okText: 'Sí',
+                    cancelText: 'No',
+                })
+                .then((dialog) => {
+                    this.axios.delete('/api/todos/'+todo.id).then((response) => {
+                        dialog.close();
+                        if (response.data.rslt) {
+                            this.items = this.items.filter(item => item !== todo)
+                        }
+                    });
+                    setTimeout(() => {
+                        dialog.close();
+                    }, 2500);
+                }).catch(function (error) {
+                    console.log(error.response);
+                });
             },
             toggleDone (todo) {
-                todo.done = !todo.done
+                this.axios.put('/api/todos/'+todo.id).then((response) => {
+                    if (response.data.rslt) {
+                        todo.done = !todo.done
+                    }
+                });
             }
         }
     }
