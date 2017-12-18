@@ -66,7 +66,7 @@ class TodoController extends Controller
             $rslt = true;
         }
 
-        return response()->json(['rslt' => $rslt]);
+        return response()->json(['rslt' => $rslt, 'todo' => $todo]);
     }
 
     /**

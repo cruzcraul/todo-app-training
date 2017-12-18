@@ -9,12 +9,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import VueAxios from 'vue-axios';
-import axios from 'axios';
 import VuejsDialog from "vuejs-dialog"
-
-Vue.use(VueAxios, axios);
-Vue.use(VuejsDialog)
+window.Vue.use(VuejsDialog)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -24,5 +20,5 @@ Vue.use(VuejsDialog)
 Vue.component('todo-component', require('./components/Todo.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
 });
